@@ -45,3 +45,34 @@ WHERE u.pwdlastset IS NOT NULL
 AND datetime({epochMillis: toInteger(u.pwdlastset * 1000)}).year = 2009
 RETURN *
 ```
+
+## Query to identify AS-REP Roastable users with passwords set 10 or more years ago and passwords that never expire:
+
+- Retrieves all users who are susceptible to AS-REP Roasting, have passwords that never expire, and whose passwords were set 10 or more years ago.
+
+```cypher
+MATCH (u:User {dontreqpreauth: true})
+WHERE u.pwdlastset IS NOT NULL 
+AND u.pwdneverexpires = true
+AND datetime({epochMillis: toInteger(u.pwdlastset * 1000)}).year <= (datetime().year - 10)
+RETURN *
+```
+
+## Query to get all Kerberoastable users:
+
+```cypher
+MATCH (u:User {hasspn:true})
+RETURN *
+```
+
+## Query to identify Kerberoastable users with passwords set 10 or more years ago and passwords that never expire:
+
+- Retrieves all users who are susceptible to Kerberoasting, have passwords that never expire, and whose passwords were set 10 or more years ago.
+
+```cypher
+MATCH (u:User {hasspn:true})
+WHERE u.pwdlastset IS NOT NULL 
+AND u.pwdneverexpires = true
+AND datetime({epochMillis: toInteger(u.pwdlastset * 1000)}).year <= (datetime().year - 10)
+RETURN *
+```
