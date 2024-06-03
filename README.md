@@ -7,8 +7,8 @@
 
 ```cypher
 MATCH (c:Computer)
-WHERE c.lastLogon IS NOT NULL
-AND datetime({epochMillis: toInteger(c.lastLogon * 1000)}).year < 2010
+WHERE c.lastlogon IS NOT NULL
+AND datetime({epochMillis: toInteger(c.lastlogon * 1000)}).year < 2010
 RETURN *
 ```
 
