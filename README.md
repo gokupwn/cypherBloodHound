@@ -28,3 +28,20 @@ MATCH (c:Computer)-[:MemberOf*1..]->(g:Group) WHERE g.objectid ENDS WITH '-516' 
 MATCH (c1:Computer)-[:MemberOf*1..]->(g:Group) WHERE g.objectsid ENDS WITH '-516' WITH COLLECT(c1.name) AS domainControllers
 MATCH (c2:Computer {unconstraineddelegation:true}) WHERE NOT c2.name IN domainControllers RETURN c2
 ```
+
+## Query for Users with Password Last Set in Year X:
+
+- Identify user accounts where the password was last set in the year 2009. It is specifically useful for auditing security practices related to password management policies and identifying potentially dormant or neglected accounts in the Active Directory environment.
+
+```cypher 
+MATCH (u:User)
+WHERE u.pwdlastset IS NOT NULL
+AND datetime({epochMillis: toInteger(u.pwdlastset * 1000)}).year = $YEAR_X
+RETURN *
+
+// EXAMPLE
+MATCH (u:User)
+WHERE u.pwdlastset IS NOT NULL
+AND datetime({epochMillis: toInteger(u.pwdlastset * 1000)}).year = 2009
+RETURN *
+```
