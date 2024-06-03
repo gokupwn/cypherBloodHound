@@ -1,4 +1,8 @@
 # CypherHound
+
+![image](https://github.com/gokupwn/cypherHound/assets/76757267/c47581f7-8823-4481-86fd-089064e69cde)
+
+
 ## Get Inactive or Decommissioned Machines:
 
 - Retrieves all computers where the last logon occurred before a specified year.
